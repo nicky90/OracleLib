@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'machines/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        {% block header %}{% endblock %}
+        <h3 class="text-muted">{% block headline %}{% endblock %}</h3>
+      </div>
+      <hr />
+      <br />
+      {% block content %}{% endblock %}     
+<br />
+      <div class="footer">
+        <p>&copy; Oracle Library <span>Contact us: </span><span><a href="mailto:nick_chiu@163.com">Email</a></span></p>
+      </div>
+    </div><!-- container -->
+  </body>
+</html>
