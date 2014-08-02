@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.name }}{% endblock %}
+
+{% block headline %}甲骨文图书管理系统-- <small>图书信息</small>{% endblock %}
+
+{% block header %}
+<ul class="nav nav-pills pull-right">
+  <li><a href="{% url 'books:index' %}"><small>首页</small></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<h3>{{ book.name }}</h3>
+<br />
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>书名</th>
+      <th>作者</th>
+      <th>出版社</th>
+      <th>当前状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ book.identifier }}</a></td>
+      <td>{{ book.name }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.publisher }}</td>
+      <td>{{ book.status }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

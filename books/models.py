@@ -11,6 +11,9 @@ class Book(models.Model):
     class Meta:
         db_table = 'books'
 
+    def __unicode__(self):
+        return self.name
+
 
 class Record(models.Model):
     book = models.OneToOneField(Book)
@@ -20,6 +23,7 @@ class Record(models.Model):
     count = models.IntegerField(default=3)
     class Meta:
         db_table = 'record'
+
 
 class HistoryRecord(models.Model):
     book = models.OneToOneField(Book)

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}退出{% endblock %}
+
+{% block headline %}甲骨文图书管理系统--<small>用户退出确认</small>{% endblock %}
+
+
+{% block content %}
+  <h1>确定退出？</h1>
+  <form action="" method="post">{% csrf_token %}
+    <input type="submit" value="YES" />
+  </form>
+{% endblock %}
