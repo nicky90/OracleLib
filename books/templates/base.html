@@ -9,17 +9,23 @@
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        {% block header %}{% endblock %}
-        <h3 class="text-muted">{% block headline %}{% endblock %}</h3>
-      </div>
+      <div class="row">
+        <div class="header">
+          {% block header %}{% endblock %}
+          <h3 class="text-muted">{% block headline %}{% endblock %}</h3>
+        </div>
+      </div><!-- end of row -->
       <hr />
       <br />
+      <div class="row">
       {% block content %}{% endblock %}     
-<br />
-      <div class="footer">
-        <p>版权所有&copy; 2014北京市海淀区－甲骨文系统平台部 <span>联系我们: </span><span><a href="mailto:nick_chiu@163.com">Email</a></span></p>
       </div>
+      <br />
+      <div class="row">
+        <div class="footer">
+          <p>版权所有&copy; 2014北京市海淀区－甲骨文系统平台部 <span>联系我们: </span><span><a href="mailto:nick_chiu@163.com">Email</a></span></p>
+        </div>
+      </div><!-- row -->
     </div><!-- container -->
   </body>
 </html>

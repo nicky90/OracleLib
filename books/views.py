@@ -72,3 +72,8 @@ def userinfo(request, username):
 @login_required
 def changepasswd(request):
     pass
+
+def search(request):
+    books = Book.objects.all()
+    return render_to_response('books/searchresults.html', \
+        RequestContext(request, {'books': books, }))
