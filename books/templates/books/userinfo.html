@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block headline %}甲骨文图书管理系统-- <small>用户信息</small>{% endblock %}
+
+{% block header %}
+<ul class="nav nav-pills pull-right">
+  <li><a href="{% url 'books:index' %}"><small>首页</small></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<h3>{{ user.username }}</h3>
+<br />
+<h4>{{ user.email }}</h4>
+<br />
+
+<h3>借书信息：</h3>
+<hr />
+{% if records.count > 0 %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>书名</th>
+      <th>作者</th>
+      <th>出版社</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in records %}
+    <tr>
+      <td>{{ record.book.identifier }}</a></td>
+      <td>{{ record.book.name }}</td>
+      <td>{{ record.book.author }}</td>
+      <td>{{ record.book.publisher }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h3>暂无借书信息</h3>
+{% endif %}
+{% endblock %}
