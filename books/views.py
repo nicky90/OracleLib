@@ -18,6 +18,7 @@ from books.forms import UserCreateForm
 
 # Create your views here.
 def index(request):
+    user = request.user
     book_list = Book.objects.all()
     paginator = Paginator(book_list, 10) # show 10 books per page
 
@@ -29,7 +30,7 @@ def index(request):
     except EmptyPage:
         books = paginator.page(paginator.num_pages)
     return render_to_response('books/index.html', \
-        RequestContext(request, {'books': books, }))
+        RequestContext(request, {'books': books, 'user': user, }))
 
 
 def register(request):
@@ -61,6 +62,13 @@ def bookinfo(request, bookid):
     return render_to_response('books/bookinfo.html', \
         RequestContext(request, {'book': book, }))
 
+@login_required
+def userinfo(request, username):
+    user = User.objects.get(username=username)
+    records = user.record_set.all()
+    return render_to_response('books/userinfo.html', \
+        RequestContext(request, {'user': user, 'records': records, }))
 
-def profile(request):
+@login_required
+def changepasswd(request):
     pass

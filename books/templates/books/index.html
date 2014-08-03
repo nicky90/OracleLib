@@ -6,8 +6,13 @@
 
 {% block header %}
 <ul class="nav nav-pills pull-right">
+  {% if user.username != '' %}
+  <li><a href="{% url 'userinfo' user %}"><small>{{ user.username }}</small></a></li>
+  <li><a href="{% url 'logout' %}"><small>退出</small></a></li>
+  {% else %}
   <li><a href="/accounts/login/"><small>登录</small></a></li>
   <li><a href="/accounts/register/"><small>注册</small></a></li>
+  {% endif %}
 </ul>
 {% endblock %}
 
