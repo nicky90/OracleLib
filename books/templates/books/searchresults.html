@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}甲骨文图书管理系统{% endblock %}
+
+{% block headline %}甲骨文图书管理系统{% endblock %}
+
+{% block header %}
+<ul class="nav nav-pills pull-right">
+  {% if user.username != '' %}
+  <li><a href="{% url 'userinfo' user %}"><small>{{ user.username }}</small></a></li>
+  <li><a href="{% url 'logout' %}"><small>退出</small></a></li>
+  {% else %}
+  <li><a href="/accounts/login/"><small>登录</small></a></li>
+  <li><a href="/accounts/register/"><small>注册</small></a></li>
+  {% endif %}
+</ul>
+{% endblock %}
+
+{% block content %}
+<h2>搜索结果</h2>
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>书名</th>
+      <th>作者</th>
+      <th>出版社</th>
+      <th>当前状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td>{{ book.identifier }}</td>
+      <td><a href="/books/profile/{{ book.identifier }}">{{ book.name }}</a></td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.publisher }}</td>
+      <td>{{ book.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="pagination">
+  <span class="step-links">
+    {% if books.has_previous %}
+      <a href="?page={{ books.previous_page_number }}">上一页</a>
+    {% endif %}
+
+    <span class="current">
+      第{{ books.number }}/{{ books.paginator.num_pages }}页
+    </span>
+
+    {% if books.has_next %}
+      <a href="?page={{ books.next_page_number }}">下一页</a>
+    {% endif %}
+  </span>
+{% endblock %}
