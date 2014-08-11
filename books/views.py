@@ -13,7 +13,9 @@ from django import forms
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from books.models import Book
+import datetime
+
+from books.models import Book, Record, HistoryRecord
 from books.forms import UserCreateForm
 
 # Create your views here.
@@ -54,8 +56,49 @@ def logout(request):
         template_name='books/logout.html') 
     return HttpResponseRedirect('/books/')
 
-def borrow(request):
-    pass
+@login_required
+def borrow(request, bookid):
+    book = Book.objects.get(identifier=bookid)
+    book.status = '已借出'
+    book.save()
+    user = request.user
+    sdate = datetime.datetime.today().date()
+    edate = sdate + datetime.timedelta(days=31)
+
+    record = Record(book=book, user=user, sdate=sdate, edate=edate, count=2)
+    record.save()
+    return render_to_response('books/bookinfo.html', \
+        RequestContext(request, {'book': book, })) 
+
+@login_required
+def renew(request, bookid):
+    book = Book.objects.get(identifier=bookid)
+    record = book.record
+    today = datetime.datetime.today().date()
+    edate = today + datetime.timedelta(days=16)
+    record.edate = edate
+    record.count = record.count - 1
+    record.save()
+    user = request.user
+    records = user.record_set.all()
+    url_redirect = '/accounts/profile/%s/' % user.username
+    return HttpResponseRedirect(url_redirect, \
+        RequestContext(request, {'user': user, 'records': records, }))
+    
+@login_required
+def bookreturn(request, bookid):
+    book = Book.objects.get(identifier=bookid)
+    record = book.record
+    user = record.user
+    sdate = record.sdate
+    edate = datetime.datetime.today().date()
+    record.delete()
+    book.status = "在架可借"
+    book.save()
+    records = user.record_set.all()
+    url_redirect = '/accounts/profile/%s/' % user.username
+    return HttpResponseRedirect(url_redirect, \
+        RequestContext(request, {'user': user, 'records': records, }))
 
 def bookinfo(request, bookid):
     book = Book.objects.get(identifier=bookid)
