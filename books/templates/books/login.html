@@ -6,8 +6,8 @@
 
 
 {% block content %}
+<!--
   <form action="" method="post">
-  {% csrf_token %}
     <label for="username">用户名:</label>
     <input type="text" name="username" value="" id="username" />
     <label for="password">密码:</label>
@@ -16,4 +16,43 @@
     <input type="submit" value="login" />
     <input type="hidden" name="next" value="{% url 'books:index' %}" />
   </form>
+-->
+<div class="col-sm-4 col-sm-offset-4">
+  <form class="form-horizontal" role="form" action="" method="post">
+  {% csrf_token %}
+    <div class="form-group">
+      <div class="row">
+        <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <input type="password" name="password" class="form-control" id="password" placeholder="请输入密码">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">记住我
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary pull-right">登录</button>
+            <input type="hidden" name="next" value="{% url 'books:index' %}" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        <span><small>还没有帐号？</small></span>
+        <span><a href="{% url 'register' %}"><small>注册</small></a></span>
+      </p>
+    </div>
+  </form>
+</div>
 {% endblock %}

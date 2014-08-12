@@ -24,11 +24,9 @@ class ProfileUser(object):
     __metaclass__ = ProfileBase
 
 class OracleUser(ProfileUser):
-    telephone = models.CharField(max_length=22)
-    team_manager = models.CharField(max_length=20)
-    team_manager_email = models.EmailField(max_length=50)
-    administrator = models.CharField(max_length=20)
-    admin_email = models.EmailField(max_length=50)
+    telephone = models.CharField(max_length=25)
+    adminname = models.CharField(max_length=50)
+    adminmail = models.EmailField(max_length=50)
 
 
 class Book(models.Model):
