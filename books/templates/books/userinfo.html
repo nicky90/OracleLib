@@ -13,11 +13,12 @@
 {% block content %}
 <h3>{{ user.username }}</h3>
 <br />
-<h4>{{ user.email }}</h4>
+<p>邮&nbsp;&nbsp;&nbsp;&nbsp;箱: &nbsp;<a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+<p>电&nbsp;&nbsp;&nbsp;&nbsp;话: &nbsp;{{ user.telephone }}</p>
+<p>管理员：&nbsp;{{ user.adminname }}(<a href="mailto:{{ user.adminmail }}">{{ user.adminmail }}</a>)</p>
 
-这里还会增加本用户的Tel,Manager等信息
 
-这里会有一个按钮，点此按钮可以更改用户密码
+<p>这里会有一个按钮，点此按钮可以更改用户密码</p>
 <br />
 
 <h3>借书信息：</h3>
@@ -32,7 +33,7 @@
       <th>出版社</th>
       <th>借书时间</th>
       <th>应还时间</th>
-      <th>&nbsp;</th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -63,6 +64,6 @@
   </tbody>
 </table>
 {% else %}
-<h4>暂无借书信息</h4>
+<h5>暂无借书信息</h5>
 {% endif %}
 {% endblock %}

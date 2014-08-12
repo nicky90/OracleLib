@@ -35,7 +35,7 @@
 </table>
 {% if book.status == "在架可借" %}
 <form class="" action="/books/borrow/{{ book.identifier }}/" method="post">{% csrf_token %}
-  <input type="submit" value="我要借此书" />
+  <input type="submit" class="btn btn-primary" value="我要借此书" />
 </form>
 {% endif %}
 {% endblock %}

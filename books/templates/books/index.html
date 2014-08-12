@@ -2,16 +2,16 @@
 
 {% block title %}甲骨文图书管理系统{% endblock %}
 
-{% block headline %}甲骨文图书管理系统{% endblock %}
+{% block headline %}<p style="color: white; font-family: sans-serif; font-weight: 900">甲骨文图书管理系统</p>{% endblock %}
 
 {% block header %}
-<ul class="nav nav-pills pull-right">
+<ul class="nav nav-pills pull-right" style="color: white">
   {% if user.username != '' %}
-  <li><a href="{% url 'userinfo' user %}"><small>{{ user.username }}</small></a></li>
-  <li><a href="{% url 'logout' %}"><small>退出</small></a></li>
+  <li><a href="{% url 'userinfo' user %}"><small style="color: white; font-weight: 900">{{ user.username }}</small></a></li>
+  <li><a href="{% url 'logout' %}"><small style="color: white; font-weight: bold">退出</small></a></li>
   {% else %}
-  <li><a href="/accounts/login/"><small>登录</small></a></li>
-  <li><a href="/accounts/register/"><small>注册</small></a></li>
+  <li><a href="/accounts/login/"><small style="color: white">登录</small></a></li>
+  <li><a href="/accounts/register/"><small style="color: white">注册</small></a></li>
   {% endif %}
 </ul>
 {% endblock %}
@@ -97,7 +97,6 @@
       <a href="?page={{ books.next_page_number }}">下一页</a>
       <a href="?page={{ books.paginator.num_pages }}">最后一页</a>
     {% endif %}
-
     <form action="" method="get">
       <input type="text" name="page" />
       <input type="submit" value="GO" />
