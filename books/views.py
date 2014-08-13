@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 from django.core.mail import send_mail
 from django import forms
@@ -34,7 +35,7 @@ def index(request):
     return render_to_response('books/index.html', \
         RequestContext(request, {'books': books, 'user': user, }))
 
-
+#@never_cache
 def register(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
@@ -46,6 +47,7 @@ def register(request):
     return render_to_response('books/register.html', \
         RequestContext(request, {'form': form, }))
 
+#@never_cache
 def login(request):
     return auth.views.login(request, \
         template_name='books/login.html')
@@ -57,6 +59,7 @@ def logout(request):
     return HttpResponseRedirect('/books/')
 
 @login_required
+#@never_cache
 def borrow(request, bookid):
     book = Book.objects.get(identifier=bookid)
     book.status = '已借出'
@@ -71,6 +74,7 @@ def borrow(request, bookid):
         RequestContext(request, {'book': book, })) 
 
 @login_required
+#@never_cache
 def renew(request, bookid):
     book = Book.objects.get(identifier=bookid)
     record = book.record
@@ -86,6 +90,7 @@ def renew(request, bookid):
         RequestContext(request, {'user': user, 'records': records, }))
     
 @login_required
+#@never_cache
 def bookreturn(request, bookid):
     book = Book.objects.get(identifier=bookid)
     record = book.record
@@ -100,12 +105,14 @@ def bookreturn(request, bookid):
     return HttpResponseRedirect(url_redirect, \
         RequestContext(request, {'user': user, 'records': records, }))
 
+#@never_cache
 def bookinfo(request, bookid):
     book = Book.objects.get(identifier=bookid)
     return render_to_response('books/bookinfo.html', \
         RequestContext(request, {'book': book, }))
 
 @login_required
+#@never_cache
 def userinfo(request, username):
     user = User.objects.get(username=username)
     records = user.record_set.all()
@@ -116,6 +123,7 @@ def userinfo(request, username):
 def changepasswd(request):
     pass
 
+#@never_cache
 def search(request):
     searchtype = request.GET.get('searchtype')
     searchword = request.GET.get('searchword')
