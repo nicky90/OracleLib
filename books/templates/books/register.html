@@ -4,6 +4,11 @@
 
 {% block headline %}甲骨文图书管理系统--<small>用户注册</small>{% endblock %}
 
+{% block header %}
+<ul class="nav nav-pills pull-right">
+  <li><a href="{% url 'books:index' %}"><small>首页</small></a></li>
+</ul>
+{% endblock %}
 
 {% block content %}
 <div class="col-sm-4 col-sm-offset-4">
@@ -49,6 +54,14 @@
         <div class="col-sm-6">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-primary pull-right">注册</button>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-offset-2 col-sm-10">
+            <p>
+              <span><small>已有帐号，</small></span>
+              <span><a href="{% url 'login' %}"><small>直接登录</small></a></span>
+            </p>
           </div>
         </div>
       </div>

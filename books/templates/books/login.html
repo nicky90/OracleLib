@@ -4,6 +4,11 @@
 
 {% block headline %}甲骨文图书管理系统--<small>用户登录</small>{% endblock %}
 
+{% block header %}
+<ul class="nav nav-pills pull-right">
+  <li><a href="{% url 'books:index' %}"><small>首页</small></a></li>
+</ul>
+{% endblock %}
 
 {% block content %}
 <!--

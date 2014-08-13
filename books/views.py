@@ -119,24 +119,41 @@ def changepasswd(request):
 def search(request):
     searchtype = request.GET.get('searchtype')
     searchword = request.GET.get('searchword')
-    if searchtype == u"书名":
-        book_list = Book.objects.filter(name=searchword)
-    if searchtype == u"作者":
-        book_list = Book.objects.filter(author=searchword)
-    if searchtype == u"出版社":
-        book_list = Book.objects.filter(publisher=searchword)
-    if searchtype == u"ID":
-        book_list = Book.objects.filter(identifier=searchword)
+    if searchword != '':
+        if searchtype == u"书名":
+            book_list = Book.objects.filter(name__contains=searchword)
+        if searchtype == u"作者":
+            book_list = Book.objects.filter(author__contains=searchword)
+        if searchtype == u"出版社":
+            book_list = Book.objects.filter(publisher__contains=searchword)
+        if searchtype == u"ID":
+            book_list = Book.objects.filter(identifier__exact=searchword)
     
-    user = request.user
-    paginator = Paginator(book_list, 10) # show 10 books per page
+        paginator = Paginator(book_list, 10) # show 10 books per page
 
-    page = request.GET.get('page')
-    try:
-        books = paginator.page(page)
-    except PageNotAnInteger:
-        books = paginator.page(1)
-    except EmptyPage:
-        books = paginator.page(paginator.num_pages)
-    return render_to_response('books/searchresults.html', \
-        RequestContext(request, {'books': books, 'user': user, }))
+        page = request.GET.get('page')
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+        user = request.user
+        return render_to_response('books/searchresults.html', \
+            RequestContext(request, {'book_list': book_list, 'books': books, 'user': user, \
+                'searchtype': searchtype, 'searchword': searchword, }))
+    else:
+        user = request.user
+        book_list = Book.objects.all()
+        paginator = Paginator(book_list, 10) # show 10 books per page
+
+        page = request.GET.get('page')
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+        return HttpResponseRedirect('/books/', \
+            RequestContext(request, {'books': books, 'user': user, }))
+        

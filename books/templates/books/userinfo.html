@@ -49,12 +49,12 @@
         <p>
         <span>
           <form class="" action="/books/renew/{{ record.book.identifier }}/" method="post">{% csrf_token %}
-            <input type="submit" value="续借" />
+            <input type="submit" class="btn btn-sm btn-primary" value="续借" />
           </form>
         </span>
         <span>
           <form class="" action="/books/return/{{ record.book.identifier }}/" method="post">{% csrf_token %}
-            <input type="submit" value="还书" />
+            <input type="submit" class="btn btn-sm btn-primary" value="还书" />
           </form>
         </span>
         </p>
