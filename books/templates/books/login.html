@@ -22,6 +22,9 @@
     <input type="hidden" name="next" value="{% url 'books:index' %}" />
   </form>
 -->
+<div class="row" style="height: 50px">
+</div>
+<div class="row">
 <div class="col-sm-4 col-sm-offset-4">
   <form class="form-horizontal" role="form" action="" method="post">
   {% csrf_token %}
@@ -47,7 +50,7 @@
         <div class="col-sm-6">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-primary pull-right">登录</button>
-           <!-- <input type="hidden" name="next" value="{x% url 'books:index' %}" /> -->
+            <input type="hidden" name="next" value="{% url 'books:index' %}" />
           </div>
         </div>
       </div>
@@ -59,5 +62,6 @@
       </p>
     </div>
   </form>
+</div>
 </div>
 {% endblock %}

@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
 <div class="col-sm-4 col-sm-offset-4">
   <form class="form-horizontal" role="form" action="" method="post">
   {% csrf_token %}
@@ -67,5 +68,6 @@
       </div>
     </div>
   </form>
+</div>
 </div>
 {% endblock %}

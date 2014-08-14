@@ -63,7 +63,7 @@
   </div>
 </form>
 <!-- end of SearchBox -->
-
+<br />
 
 <table class="table table-bordered table-striped table-hover">
   <thead>
@@ -87,25 +87,92 @@
     {% endfor %}
   </tbody>
 </table>
-<div class="pagination">
-  <span class="step-links">
-    {% if books.has_previous %}
-      <a href="?page=1">第1页</a>
-      <a href="?page={{ books.previous_page_number }}">上一页</a>
-    {% endif %}
+<!--
+<div class="row">
+  <div class="col-sm-6">
+    <div class="pagination">
+      <div class="step-links">
+        {x% if books.has_previous %}
+        <span class="previous">
+          <a href="?page=1">第1页</a>
+          <a href="?page={x{ books.previous_page_number }}">上一页</a>
+        </span>
+        {x% endif %}
 
-    <span class="current">
-      第{{ books.number }}/{{ books.paginator.num_pages }}页
-    </span>
+        <span class="current">
+          第{x{ books.number }}/{x{ books.paginator.num_pages }}页
+        </span>
 
-    {% if books.has_next %}
-      <a href="?page={{ books.next_page_number }}">下一页</a>
-      <a href="?page={{ books.paginator.num_pages }}">最后一页</a>
-    {% endif %}
+        {x% if books.has_next %}
+        <span class="next">
+          <a href="?page={x{ books.next_page_number }}">下一页</a>
+          <a href="?page={x{ books.paginator.num_pages }}">最后一页</a>
+        </span>
+        {x% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
     <form action="" method="get">
       <input type="text" name="page" />
       <input type="submit" value="GO" />
     </form>
-  </span>
+  </div>
+</div>
+-->
+<div class="row">
+  <div class="pull-left">
+    <ul class="pager">
+      {% if books.has_previous %}
+      <li class="previous"><a href="?page={{ books.previous_page_number }}">上一页</a></li>
+      {% else %}
+      <li class="previous disabled"><a href="?page=1">上一页</a></li>
+      {% endif %}
+      <li class="previous"><a href="" style="font-weight: bold;color: black">第{{ books.number }}/{{ books.paginator.num_pages }}页</a></li>
+      {% if books.has_next %}
+      <li class="previous"><a href="?page={{ books.next_page_number }}">下－页</a></li>
+      {% else %}
+      <li class="next disabled"><a href="?page={{ books.paginator.num_pages }}">下一页</a></li>
+      {% endif %}
+<!--
+      <li class="next">
+        <form class="form form-inline" role="form" action="" method="get">
+          <div class="form-group">
+            <input class="form-control" style="width:25%" type="text" name="page" />
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-default btn-primary" value="GO" />
+          </div>
+        </form>
+      </li>
+-->
+    </ul>
+  </div>
+  <div class="pull-right">
+    <ul class="pager">
+      <li class="next">
+        <form class="form form-inline" role="form" action="" method="get">
+          <div class="form-group">
+            <input class="form-control" style="width:25%;float:right" type="text" name="page" />
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-default btn-primary" value="GO" />
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+<!--
+  <div class="col-sm-6 col-sm-offset-6">
+    <form class="form form-inline" role="form" action="" method="get">
+      <div class="form-group">
+        <input class="form-control" type="text" name="page" />
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-default btn-primary" value="GO" />
+      </div>
+    </form>
+  </div>
+-->
 </div>
 {% endblock %}

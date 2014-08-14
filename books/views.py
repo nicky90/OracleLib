@@ -20,6 +20,7 @@ from books.models import Book, Record, HistoryRecord
 from books.forms import UserCreateForm
 
 # Create your views here.
+@never_cache
 def index(request):
     user = request.user
     book_list = Book.objects.all()
@@ -35,7 +36,7 @@ def index(request):
     return render_to_response('books/index.html', \
         RequestContext(request, {'books': books, 'user': user, }))
 
-#@never_cache
+@never_cache
 def register(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
@@ -47,19 +48,21 @@ def register(request):
     return render_to_response('books/register.html', \
         RequestContext(request, {'form': form, }))
 
-#@never_cache
+@never_cache
 def login(request):
-    return auth.views.login(request, \
-        template_name='books/login.html')
+    return auth.views.login(request, template_name='books/login.html')
+
 
 @login_required
+@never_cache
 def logout(request):
     auth.views.logout(request, \
         template_name='books/logout.html') 
     return HttpResponseRedirect('/books/')
 
+
 @login_required
-#@never_cache
+@never_cache
 def borrow(request, bookid):
     book = Book.objects.get(identifier=bookid)
     book.status = '已借出'
@@ -70,11 +73,14 @@ def borrow(request, bookid):
 
     record = Record(book=book, user=user, sdate=sdate, edate=edate, count=2)
     record.save()
-    return render_to_response('books/bookinfo.html', \
-        RequestContext(request, {'book': book, })) 
+
+    url_redirect = '/accounts/profile/%s/' % user.username
+    records = user.record_set.all()
+    return HttpResponseRedirect(url_redirect, \
+        RequestContext(request, {'user': user, 'records': records, })) 
 
 @login_required
-#@never_cache
+@never_cache
 def renew(request, bookid):
     book = Book.objects.get(identifier=bookid)
     record = book.record
@@ -90,7 +96,7 @@ def renew(request, bookid):
         RequestContext(request, {'user': user, 'records': records, }))
     
 @login_required
-#@never_cache
+@never_cache
 def bookreturn(request, bookid):
     book = Book.objects.get(identifier=bookid)
     record = book.record
@@ -105,25 +111,31 @@ def bookreturn(request, bookid):
     return HttpResponseRedirect(url_redirect, \
         RequestContext(request, {'user': user, 'records': records, }))
 
-#@never_cache
+@never_cache
 def bookinfo(request, bookid):
     book = Book.objects.get(identifier=bookid)
     return render_to_response('books/bookinfo.html', \
         RequestContext(request, {'book': book, }))
 
 @login_required
-#@never_cache
+@never_cache
 def userinfo(request, username):
     user = User.objects.get(username=username)
     records = user.record_set.all()
     return render_to_response('books/userinfo.html', \
         RequestContext(request, {'user': user, 'records': records, }))
 
+#def profile(request):
+#    user = request.user
+#    records = user.record_set.all()
+#    return render_to_response('/books/userinfo.html', \
+#        RequestContext(request, {'user': user, 'records': records, }))
+
 @login_required
 def changepasswd(request):
     pass
 
-#@never_cache
+@never_cache
 def search(request):
     searchtype = request.GET.get('searchtype')
     searchword = request.GET.get('searchword')
@@ -135,7 +147,7 @@ def search(request):
         if searchtype == u"出版社":
             book_list = Book.objects.filter(publisher__contains=searchword)
         if searchtype == u"ID":
-            book_list = Book.objects.filter(identifier__exact=searchword)
+            book_list = Book.objects.filter(identifier__contains=searchword)
     
         paginator = Paginator(book_list, 10) # show 10 books per page
 
